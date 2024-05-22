@@ -1,9 +1,13 @@
 import 'reflect-metadata'
 import express from 'express'
 import routes from './config/routes'
+import { json } from 'express'
+import './shared/container'
+import http from 'http'
 const app = express()
-
-app.listen(3000, () => {
+const server = http.createServer(app)
+app.use(json())
+server.listen(3000, () => {
   console.log('Running on port 3000! 🚀 🚀')
 })
 

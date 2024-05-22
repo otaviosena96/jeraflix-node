@@ -11,6 +11,7 @@ export default class UserServiceCrud {
   ) {}
 
   public async create(data: CreateUserDTO): Promise<IUser> {
+    console.log(data)
     return this.userRepository.create(data)
   }
 }

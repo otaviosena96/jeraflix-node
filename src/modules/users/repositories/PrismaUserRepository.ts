@@ -3,8 +3,7 @@ import { PrismaClient } from '@prisma/client'
 import { IUserRepository } from '../../../models/repositories/IUserRepository'
 import { CreateUserDTO, UpdateUserDTO } from '../../../models/domain/dtos'
 import { IUser } from '../../../models/domain/entities'
-
-const prisma = new PrismaClient()
+import prisma from '../../../config/prisma/prisma'
 
 export class PrismaUserRepository implements IUserRepository {
   async create(data: CreateUserDTO): Promise<IUser> {
