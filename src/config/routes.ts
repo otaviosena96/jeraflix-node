@@ -9,5 +9,6 @@ routes.get('/', (req, res) => {
 })
 
 routes.post('/users/create', usersController.create)
+routes.post('/login', usersController.login)
 
 export default routes

@@ -14,8 +14,9 @@ export interface UpdateUserDTO {
 }
 
 export interface CreateProfileDTO {
+  uuid: string
   name: string
-  userId: string
+  userId: number
 }
 
 export interface UpdateProfileDTO {
@@ -40,4 +41,9 @@ export interface CreateUserTokenDTO {
 export interface UpdateUserTokenDTO {
   token?: string
   expiresAt?: Date
+}
+
+export interface LoginDto {
+  email: string
+  password: string
 }

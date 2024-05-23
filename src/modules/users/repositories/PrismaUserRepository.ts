@@ -1,5 +1,3 @@
-import { injectable } from 'tsyringe'
-import { PrismaClient } from '@prisma/client'
 import { IUserRepository } from '../../../models/repositories/IUserRepository'
 import { CreateUserDTO, UpdateUserDTO } from '../../../models/domain/dtos'
 import { IUser } from '../../../models/domain/entities'
@@ -26,5 +24,25 @@ export class PrismaUserRepository implements IUserRepository {
       where: { id },
     })
     return user
+  }
+
+  async findByEmail(email: string): Promise<IUser | null> {
+    const user = prisma.user.findUnique({
+      where: { email },
+    })
+    return user
+  }
+
+  async storeToken(
+    userId: number,
+    token: string,
+    expiresAt: Date,
+  ): Promise<void> {
+    const data = {
+      userId,
+      token,
+      expiresAt,
+    }
+    await prisma.userToken.create({ data })
   }
 }

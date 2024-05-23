@@ -10,10 +10,10 @@ export interface IUser {
 }
 
 export interface IProfile {
-  id: string
+  id: number
   uuid: string
   name: string
-  userId: string
+  userId: number
   createdAt: Date
   updatedAt: Date
 }
