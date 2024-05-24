@@ -28,9 +28,12 @@ export default class UserServiceCrud {
     return this.userRepository.create(userDataWithHashedPassword)
   }
 
-  public async login(
-    data: LoginDto,
-  ): Promise<{ userId: number; token: string }> {
+  public async login(data: LoginDto): Promise<{
+    userId: number
+    userName: string
+    userUuid: string
+    token: string
+  }> {
     const user = await this.userRepository.findByEmail(data.email)
     if (!user) {
       throw new AppError(
@@ -46,7 +49,6 @@ export default class UserServiceCrud {
       )
     }
 
-    // Gera um novo token de autenticação com o ID do usuário
     if (!process.env.JWT_SECRET) {
       throw new AppError('A chave secreta JWT não está definida.')
     }
@@ -56,7 +58,13 @@ export default class UserServiceCrud {
     })
     const expiresAt = new Date(Date.now() + 12 * 60 * 60 * 1000) // 12 horas a partir de agora
     await this.userRepository.storeToken(user.id, token, expiresAt)
+
     // Retorna o token gerado
-    return { userId: user.id, token: token }
+    return {
+      userId: user.id,
+      userName: user.name,
+      userUuid: user.uuid,
+      token: token,
+    }
   }
 }
