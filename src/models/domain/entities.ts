@@ -4,6 +4,7 @@ export interface IUser {
   name: string
   email: string
   password: string
+  birth_date: Date
   facebookId?: string | null
   createdAt: Date
   updatedAt: Date

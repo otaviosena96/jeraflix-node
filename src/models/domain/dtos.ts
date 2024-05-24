@@ -2,6 +2,7 @@ export interface CreateUserDTO {
   name: string
   uuid: string
   email: string
+  birth_date: Date
   password: string
   facebookId?: string | null
 }

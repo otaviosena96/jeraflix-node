@@ -12,6 +12,7 @@ model User {
   uuid       String
   email      String      @unique
   name       String
+  birth_date DateTime
   password   String
   facebookId String?     @unique
   profiles   Profile[]

@@ -6,7 +6,6 @@ export default class UsersController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
       const data = req.body
-      console.log(data)
       const user = await container.resolve(UserServiceCrud).create(data)
       const status = 201
       const message = 'Usuário criado com sucesso!'
@@ -35,8 +34,10 @@ export default class UsersController {
         data: user,
       })
     } catch (error: any) {
+      console.log(error)
       return res.status(500).json({
         status: 500,
+        erro: 'Erro ao autenticar usuário.',
         message: error.message,
       })
     }
