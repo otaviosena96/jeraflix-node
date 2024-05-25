@@ -17,6 +17,7 @@ export interface UpdateUserDTO {
 export interface CreateProfileDTO {
   uuid: string
   name: string
+  color: string
   userId: number
 }
 

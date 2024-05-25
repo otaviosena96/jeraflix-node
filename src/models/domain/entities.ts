@@ -29,7 +29,7 @@ export interface IProfileMovieFavorite {
 
 export interface IUserToken {
   id: number
-  userId: string
+  userId: number
   token: string
   createdAt: Date
   expiresAt: Date

@@ -1,23 +1,25 @@
 import { inject, injectable } from 'tsyringe'
-import { CreateUserDTO, LoginDto } from '../../../models/domain/dtos'
+import {
+  CreateProfileDTO,
+  CreateUserDTO,
+  LoginDto,
+} from '../../../models/domain/dtos'
 import { IUserRepository } from '../../../models/repositories/IUserRepository'
-import { IUser } from '../../../models/domain/entities'
+import { IProfile, IUser } from '../../../models/domain/entities'
 import bcrypt from 'bcryptjs'
+import { IProfileRepository } from '../../../models/repositories/IProfileRepository'
+import { v4 } from 'uuid'
 
 @injectable()
-export default class UserServiceCrud {
+export default class ProfileServiceCrud {
   constructor(
-    @inject('UserRepository')
-    private userRepository: IUserRepository,
+    @inject('ProfileRepository')
+    private profileRepository: IProfileRepository,
   ) {}
 
-  public async create(data: CreateUserDTO): Promise<IUser> {
-    const hashedPassword = await bcrypt.hash(data.password, 8)
-    const userDataWithHashedPassword: CreateUserDTO = {
-      ...data,
-      password: hashedPassword,
-    }
-
-    return this.userRepository.create(userDataWithHashedPassword)
+  public async create(data: CreateProfileDTO): Promise<any> {
+    data.uuid = v4()
+    return true
+    /* return this.profileRepository.create() */
   }
 }
