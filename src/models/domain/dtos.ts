@@ -18,7 +18,7 @@ export interface CreateProfileDTO {
   uuid: string
   name: string
   color: string
-  userId: number
+  user_id: number
 }
 
 export interface UpdateProfileDTO {

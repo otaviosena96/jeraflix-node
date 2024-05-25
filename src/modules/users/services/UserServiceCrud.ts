@@ -56,8 +56,6 @@ export default class UserServiceCrud {
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
       expiresIn: '12h',
     })
-    const expiresAt = new Date(Date.now() + 12 * 60 * 60 * 1000) // 12 horas a partir de agora
-    await this.userRepository.storeToken(user.id, token, expiresAt)
 
     // Retorna o token gerado
     return {

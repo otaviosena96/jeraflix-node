@@ -18,7 +18,7 @@ routes.post(
   usersController.create,
 )
 routes.post('/users/signin', usersController.login)
-routes.post('/profiles/create', profileController.create)
-routes.get('/profiles', authenticator, profileController.create)
+routes.post('/profiles/create', authenticator, profileController.create)
+routes.get('/profiles', authenticator, profileController.findByUserId)
 
 export default routes

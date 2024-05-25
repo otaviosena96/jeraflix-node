@@ -14,7 +14,7 @@ export interface IProfile {
   id: number
   uuid: string
   name: string
-  userId: number
+  user_id: number
   createdAt: Date
   updatedAt: Date
 }

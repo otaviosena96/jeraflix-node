@@ -6,4 +6,5 @@ export interface IProfileRepository {
   update(id: number, user: UpdateProfileDTO): Promise<IProfile>
   delete(id: number): Promise<void>
   findByUserId(userId: number): Promise<IProfile[] | null>
+  findByName(name: string, user_id: number): Promise<IProfile | null>
 }

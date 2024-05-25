@@ -10,13 +10,18 @@ export class PrismaProfileRepository implements IProfileRepository {
   delete(id: number): Promise<void> {
     throw new Error('Method not implemented.')
   }
-  findByUserId(userId: number): Promise<IProfile[] | null> {
-    throw new Error('Method not implemented.')
+  findByUserId(user_id: number): Promise<IProfile[] | null> {
+    return prisma.profile.findMany({
+      where: { user_id },
+    })
   }
   async create(data: CreateProfileDTO): Promise<IProfile> {
-    const createdProfile = await prisma.profile.create({
+    return await prisma.profile.create({
       data,
     })
-    return createdProfile
+  }
+
+  async findByName(name: string, user_id: number): Promise<IProfile | null> {
+    return await prisma.profile.findFirst({ where: { name, user_id } })
   }
 }
