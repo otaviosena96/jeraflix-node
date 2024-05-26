@@ -8,17 +8,16 @@ generator client {
 }
 
 model User {
-  id         Int         @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   uuid       String
-  email      String      @unique
+  email      String    @unique
   name       String
   birth_date DateTime
   password   String
-  facebookId String?     @unique
+  facebookId String?   @unique
   profiles   Profile[]
-  userTokens UserToken[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 
   @@map("users")
 }
@@ -49,18 +48,6 @@ model ProfileMovieFavorite {
 
   @@unique([profileId, tmdbId])
   @@map("profile_movie_favorite")
-}
-
-model UserToken {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  token     String   @unique
-  createdAt DateTime @default(now())
-  expiresAt DateTime
-  updatedAt DateTime @updatedAt
-
-  @@map("user_token")
 }
 
 // sudo docker run --name jera-test -e MYSQL_ROOT_PASSWORD=jeratest -e MYSQL_DATABASE=jeraflix_db -p 3306:3306 -d mariadb:latest

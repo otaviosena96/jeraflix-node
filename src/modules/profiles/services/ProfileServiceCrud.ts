@@ -24,16 +24,7 @@ export default class ProfileServiceCrud {
       throw new Error('Sua conta atingiu o limite de perfis')
     }
     data.uuid = v4()
-    const user = await this.profileRepository.create(data)
-
-    const profile = container.resolve(ProfileServiceCrud).create({
-      uuid: data.uuid ? data.uuid : v4(),
-      name: data.name,
-      color: data.color,
-      user_id: user.id,
-    })
-
-    return profile
+    return this.profileRepository.create(data)
   }
   public async findByUserId(user_id: number): Promise<any> {
     return this.profileRepository.findByUserId(user_id)

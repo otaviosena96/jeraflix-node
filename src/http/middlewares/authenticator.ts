@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { container } from 'tsyringe'
 import jwt, { JwtPayload } from 'jsonwebtoken'
-import AuthUserService from '../../modules/users/services/AuthUserService'
 
 const authenticator = async (
   req: Request,
@@ -10,6 +9,7 @@ const authenticator = async (
 ) => {
   try {
     let token = req.headers.authorization
+    console.log(token)
 
     if (!token) {
       return res.status(401).json({ error: 'Token not provided' })

@@ -46,12 +46,4 @@ export class PrismaUserRepository implements IUserRepository {
     }
     await prisma.userToken.create({ data })
   }
-
-  async auth(token: string): Promise<IUserToken | null> {
-    const userToken = await prisma.userToken.findUnique({
-      where: { token },
-    })
-
-    return userToken
-  }
 }

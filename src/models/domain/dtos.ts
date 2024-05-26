@@ -5,6 +5,7 @@ export interface CreateUserDTO {
   birth_date: Date
   password: string
   facebookId?: string | null
+  color?: string | null
 }
 
 export interface UpdateUserDTO {

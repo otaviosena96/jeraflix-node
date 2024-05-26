@@ -27,4 +27,14 @@ export const userSchema = Joi.object({
     'date.iso': 'A data de nascimento deve estar no formato ISO 8601',
     'any.required': 'A data de nascimento é um campo obrigatório',
   }),
+
+  color: Joi.string()
+    .pattern(/^#[0-9A-F]{6}$/i)
+    .required()
+    .messages({
+      'string.base': 'A cor deve ser um texto',
+      'string.empty': 'A cor não pode estar vazia',
+      'string.pattern.base': 'A cor deve estar no formato hexadecimal',
+      'any.required': 'A cor é um campo obrigatório',
+    }),
 })

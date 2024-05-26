@@ -7,5 +7,4 @@ export interface IUserRepository {
   findById(id: number): Promise<IUser | null>
   findByEmail(email: string): Promise<IUser | null>
   storeToken(userId: number, token: string, expiresAt: Date): Promise<void>
-  auth(token: string): Promise<IUserToken | null>
 }
