@@ -33,17 +33,4 @@ export class PrismaUserRepository implements IUserRepository {
     })
     return user
   }
-
-  async storeToken(
-    userId: number,
-    token: string,
-    expiresAt: Date,
-  ): Promise<void> {
-    const data = {
-      userId,
-      token,
-      expiresAt,
-    }
-    await prisma.userToken.create({ data })
-  }
 }
