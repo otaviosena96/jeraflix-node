@@ -37,17 +37,28 @@ model Profile {
 }
 
 model ProfileMovieFavorite {
-  id        Int      @id @default(autoincrement())
-  profile   Profile  @relation(fields: [profileId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  profileId Int
-  tmdbId    Int // O ID do filme na API externa
-  label     String
-  watched   Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  profile       Profile  @relation(fields: [profile_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  profile_id    Int
+  tmdbId        Int // O ID do filme na API externa
+  genre         Genres   @relation(fields: [genre_tmdb_id], references: [tmdbId])
+  genre_tmdb_id Int
+  title         String
+  watched       Boolean
+  favorite      Boolean
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  @@unique([profileId, tmdbId])
   @@map("profile_movie_favorite")
+}
+
+model Genres {
+  id     Int                    @id @default(autoincrement())
+  name   String
+  tmdbId Int                    @unique
+  movies ProfileMovieFavorite[]
+
+  @@map("genres")
 }
 
 // sudo docker run --name jera-test -e MYSQL_ROOT_PASSWORD=jeratest -e MYSQL_DATABASE=jeraflix_db -p 3306:3306 -d mariadb:latest

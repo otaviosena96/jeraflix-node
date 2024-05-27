@@ -9,7 +9,6 @@ const authenticator = async (
 ) => {
   try {
     let token = req.headers.authorization
-    console.log(token)
 
     if (!token) {
       return res.status(401).json({ error: 'Token not provided' })
@@ -20,7 +19,7 @@ const authenticator = async (
       return res.status(401).json({ error: 'JWT_SECRET not provided' })
     }
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload
-    console.log(decodedToken)
+
     if (!decodedToken) {
       return res.status(401).json({ error: 'Invalid token' })
     }

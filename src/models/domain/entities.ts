@@ -23,6 +23,7 @@ export interface IProfileMovieFavorite {
   id: string
   profileId: string
   tmdbId: number
+  genre_tmdb_id: number
   createdAt: Date
   updatedAt: Date
 }

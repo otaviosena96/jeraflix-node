@@ -50,3 +50,12 @@ export interface LoginDto {
   email: string
   password: string
 }
+
+export interface CreateMovieFavorite {
+  tmdbId: number
+  title: string
+  profile_id: number
+  genre_tmdb_id: number
+  watched: boolean
+  favorite: boolean
+}

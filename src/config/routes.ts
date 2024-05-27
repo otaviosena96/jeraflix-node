@@ -1,12 +1,14 @@
 import { Router } from 'express'
 import UsersController from '../modules/users/controllers/UserController'
+import ProfileController from '../modules/profiles/controllers/ProfileController'
+import MoviesController from '../modules/movies/controllers/MoviesController'
 import { validateRequest } from '../http/middlewares/validateRequest'
 import { userSchema } from '../http/validations/userCreateSchema'
-import ProfileController from '../modules/profiles/controllers/ProfileController'
 import authenticator from '../http/middlewares/authenticator'
 const routes = Router()
 const usersController = new UsersController()
 const profileController = new ProfileController()
+const moviesController = new MoviesController()
 
 routes.get('/', (req, res) => {
   res.send('Hello World!')
@@ -20,5 +22,16 @@ routes.post(
 routes.post('/users/signin', usersController.login)
 routes.post('/profiles/create', authenticator, profileController.create)
 routes.get('/profiles', authenticator, profileController.findByUserId)
+routes.get('/movies/wishlist', authenticator, moviesController.getWishlist)
+routes.get(
+  '/movies/search-movies-suggested',
+  authenticator,
+  moviesController.searchMoviesSuggested,
+)
+routes.post(
+  '/movies/add-to-favorite',
+  authenticator,
+  moviesController.addToFavorite,
+)
 
 export default routes
