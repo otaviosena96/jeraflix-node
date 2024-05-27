@@ -129,7 +129,6 @@ export default class SearchMoviesSuggestedService {
     page: number,
     limit: number,
   ): Promise<ResponseTmdb> {
-    console.log(genreId)
     const response = await container
       .resolve(SearchMoviesSuggested)
       .requestToApiWithGenres(page, genreId)
