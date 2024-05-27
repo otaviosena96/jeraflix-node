@@ -41,6 +41,7 @@ export default class SearchMoviesSuggested {
         'http://api.themoviedb.org/3/discover/movie',
         { params },
       )
+
       return response.data
     } catch (error) {
       console.log(error)

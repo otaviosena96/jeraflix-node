@@ -15,6 +15,12 @@ export default class SearchMoviesSuggestedService {
     profile_id: number,
     page: number,
   ): Promise<ResponseTmdb> {
+    const movies = await this.get(profile_id, page)
+    movies.movies = await this.appendGenreNames(movies.movies)
+    return movies
+  }
+
+  public async get(profile_id: number, page: number): Promise<ResponseTmdb> {
     const profileMovies = await this.movieRepository.findByProfileId(profile_id)
     let suggestedMovies: ResponseTmdb = {
       movies: [],
@@ -95,7 +101,7 @@ export default class SearchMoviesSuggestedService {
         uniqueSuggestedMovies = uniqueSuggestedMovies.concat(newUniqueMovies)
       }
     }
-    console.log(suggestedMovies)
+
     return {
       movies: uniqueSuggestedMovies.slice(0, 20),
       total_pages: suggestedMovies.total_pages,
@@ -103,29 +109,17 @@ export default class SearchMoviesSuggestedService {
     }
   }
 
-  private async appendGenreNames(suggestedMovies: any[]): Promise<any[]> {
-    return Promise.all(
-      suggestedMovies.map(async (movie) => {
-        const genre = await this.movieRepository.findGenreByTmdbId(
-          movie.genre_ids[0],
-        )
-        movie.genre = genre.name
-        return movie
-      }),
-    )
-  }
-
   private async requestRandomMovies(
     page: number,
     limit: number,
   ): Promise<ResponseTmdb> {
-    const result = await container
+    const response = await container
       .resolve(SearchMoviesSuggested)
       .requestToApiWithoutGenres(page)
-    console.log(result)
-    const movies = result.results.slice(0, limit)
-    const total_pages = result.total_pages
-    const total_results = result.total_results
+
+    const movies = response.results.slice(0, limit)
+    const total_pages = response.total_pages
+    const total_results = response.total_results
 
     return { movies, total_pages, total_results }
   }
@@ -135,13 +129,14 @@ export default class SearchMoviesSuggestedService {
     page: number,
     limit: number,
   ): Promise<ResponseTmdb> {
-    const result = await container
+    console.log(genreId)
+    const response = await container
       .resolve(SearchMoviesSuggested)
       .requestToApiWithGenres(page, genreId)
 
-    const movies = result.results.slice(0, limit)
-    const total_pages = result.total_pages
-    const total_results = result.total_results
+    const movies = response.results.slice(0, limit)
+    const total_pages = response.total_pages
+    const total_results = response.total_results
 
     return { movies, total_pages, total_results }
   }
@@ -149,7 +144,7 @@ export default class SearchMoviesSuggestedService {
   private async getMainGenre(movies: IProfileMovieFavorite[]): Promise<number> {
     const countMap: { [key: number]: number } = {}
     movies.forEach((movie: any) => {
-      const genreId = movie.genre_tmdb_id
+      const genreId = movie.genre_id
       countMap[genreId] = (countMap[genreId] || 0) + 1
     })
 
@@ -168,5 +163,17 @@ export default class SearchMoviesSuggestedService {
     } else {
       throw new Error('Nenhum gênero encontrado nos filmes fornecidos.')
     }
+  }
+
+  private async appendGenreNames(suggestedMovies: any[]): Promise<any[]> {
+    return Promise.all(
+      suggestedMovies.map(async (movie) => {
+        const genre = await this.movieRepository.findGenreById(
+          movie.genre_ids[0],
+        )
+        movie.genre = genre.name
+        return movie
+      }),
+    )
   }
 }

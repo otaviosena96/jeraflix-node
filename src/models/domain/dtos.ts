@@ -54,14 +54,21 @@ export interface LoginDto {
 export interface CreateMovieFavorite {
   tmdbId: number
   title: string
+  overview: string
   profile_id: number
-  genre_tmdb_id: number
+  genre_id: number
   watched: boolean
   favorite: boolean
 }
 
 export interface ResponseTmdb {
   movies: IMovieTmdb[]
+  total_pages: number
+  total_results: number
+}
+
+export interface ResponseTmdbByJera {
+  movies: IMovieTmdbByJera[]
   total_pages: number
   total_results: number
 }
@@ -76,6 +83,24 @@ export interface IMovieTmdb {
   overview: string
   popularity: number
   poster_path: string | null
+  release_date: string
+  title: string
+  video: boolean
+  vote_average: number
+  vote_count: number
+}
+
+export interface IMovieTmdbByJera {
+  adult: boolean
+  backdrop_path: string | null
+  genre_ids: number[]
+  id: number
+  original_language: string
+  original_title: string
+  overview: string
+  popularity: number
+  poster_path: string | null
+  genre: string
   release_date: string
   title: string
   video: boolean

@@ -23,15 +23,21 @@ routes.post('/users/signin', usersController.login)
 routes.post('/profiles/create', authenticator, profileController.create)
 routes.get('/profiles', authenticator, profileController.findByUserId)
 routes.get('/movies/wishlist', authenticator, moviesController.getWishlist)
+routes.get('/movies/watched', authenticator, moviesController.getWatched)
 routes.get(
   '/movies/search-movies-suggested',
   authenticator,
   moviesController.searchMoviesSuggested,
 )
 routes.post(
-  '/movies/add-to-favorite',
+  '/movies/toogle-favorite',
   authenticator,
-  moviesController.addToFavorite,
+  moviesController.toogleFavorite,
+)
+routes.post(
+  '/movies/toogle-watched',
+  authenticator,
+  moviesController.toogleWatched,
 )
 
 export default routes

@@ -37,25 +37,27 @@ model Profile {
 }
 
 model ProfileMovieFavorite {
-  id            Int      @id @default(autoincrement())
-  profile       Profile  @relation(fields: [profile_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  profile_id    Int
-  tmdbId        Int // O ID do filme na API externa
-  genre         Genres   @relation(fields: [genre_tmdb_id], references: [tmdbId])
-  genre_tmdb_id Int
-  title         String
-  watched       Boolean
-  favorite      Boolean
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  profile    Profile  @relation(fields: [profile_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  profile_id Int
+  tmdbId     Int // O ID do filme na API externa
+  genre      Genres   @relation(fields: [genre_id], references: [id])
+  genre_id   Int
+  title      String
+  overview   String   @db.LongText
+  watched    Boolean
+  favorite   Boolean
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
+  @@unique([tmdbId, profile_id], name: "tmdbId_profile_id")
+  @@index([tmdbId, profile_id], name: "idx_tmdbId_profile_id")
   @@map("profile_movie_favorite")
 }
 
 model Genres {
   id     Int                    @id @default(autoincrement())
   name   String
-  tmdbId Int                    @unique
   movies ProfileMovieFavorite[]
 
   @@map("genres")
