@@ -3,6 +3,7 @@ import { container } from 'tsyringe'
 import ProfileServiceCrud from '../services/SearchMoviesSuggestedService'
 import SearchMoviesSuggestedService from '../services/SearchMoviesSuggestedService'
 import MoviesServiceCrud from '../services/MoviesServiceCrud'
+import SearchMoviesDirectService from '../services/SearchMoviesDirectService'
 export default class MoviesController {
   public async searchMoviesSuggested(
     req: Request,
@@ -101,6 +102,28 @@ export default class MoviesController {
       const movies = await container
         .resolve(MoviesServiceCrud)
         .getWatched(profile_id, page)
+      const status = 201
+      const message = 'Operação realizada com sucesso!'
+      return res.json({
+        status,
+        message,
+        data: movies,
+      })
+    } catch (error: any) {
+      return res.status(500).json({
+        status: 500,
+        message: error.message,
+      })
+    }
+  }
+
+  public async searchMovies(req: Request, res: Response): Promise<Response> {
+    try {
+      const search = String(req.query.query)
+      const page = Number(req.query.page)
+      const movies = await container
+        .resolve(SearchMoviesDirectService)
+        .execute(search, page)
       const status = 201
       const message = 'Operação realizada com sucesso!'
       return res.json({

@@ -25,7 +25,7 @@ routes.get('/profiles', authenticator, profileController.findByUserId)
 routes.get('/movies/wishlist', authenticator, moviesController.getWishlist)
 routes.get('/movies/watched', authenticator, moviesController.getWatched)
 routes.get(
-  '/movies/search-movies-suggested',
+  '/movies/search-suggested',
   authenticator,
   moviesController.searchMoviesSuggested,
 )
@@ -39,5 +39,7 @@ routes.post(
   authenticator,
   moviesController.toogleWatched,
 )
+
+routes.get('/movies/search', authenticator, moviesController.searchMovies)
 
 export default routes
