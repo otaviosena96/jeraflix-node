@@ -40,6 +40,18 @@ routes.post(
   moviesController.toogleWatched,
 )
 
+routes.post(
+  '/movies/add-favorite-direct',
+  authenticator,
+  moviesController.addFavoriteDirect,
+)
+
+routes.post(
+  '/movies/add-watched-direct',
+  authenticator,
+  moviesController.addWatchedDirect,
+)
+
 routes.get('/movies/search', authenticator, moviesController.searchMovies)
 
 export default routes

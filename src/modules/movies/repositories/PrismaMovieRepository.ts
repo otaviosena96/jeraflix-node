@@ -97,4 +97,13 @@ export class PrismaMovieRepository implements IMovieRepository {
       where: { id },
     })
   }
+
+  async find(profile_id: number, tmdb_id: number): Promise<any> {
+    return await prisma.profileMovieFavorite.findFirst({
+      where: {
+        profile_id,
+        tmdbId: tmdb_id,
+      },
+    })
+  }
 }

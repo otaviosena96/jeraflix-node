@@ -54,7 +54,6 @@ export default class MoviesController {
   public async toogleFavorite(req: Request, res: Response): Promise<Response> {
     try {
       const data = req.body
-      data.user_id = req.headers.user_id
       Number(data.profile_id)
       const movies = await container
         .resolve(MoviesServiceCrud)
@@ -124,6 +123,55 @@ export default class MoviesController {
       const movies = await container
         .resolve(SearchMoviesDirectService)
         .execute(search, page)
+      const status = 201
+      const message = 'Operação realizada com sucesso!'
+      return res.json({
+        status,
+        message,
+        data: movies,
+      })
+    } catch (error: any) {
+      return res.status(500).json({
+        status: 500,
+        message: error.message,
+      })
+    }
+  }
+
+  public async addFavoriteDirect(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    try {
+      const data = req.body
+      Number(data.profile_id)
+      const movies = await container
+        .resolve(MoviesServiceCrud)
+        .addFavoriteDirect(data)
+      const status = 201
+      const message = 'Operação realizada com sucesso!'
+      return res.json({
+        status,
+        message,
+        data: movies,
+      })
+    } catch (error: any) {
+      return res.status(500).json({
+        status: 500,
+        message: error.message,
+      })
+    }
+  }
+  public async addWatchedDirect(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    try {
+      const data = req.body
+      data.user_id = req.headers.user_id
+      const movies = await container
+        .resolve(MoviesServiceCrud)
+        .addWatchedDirect(data)
       const status = 201
       const message = 'Operação realizada com sucesso!'
       return res.json({
