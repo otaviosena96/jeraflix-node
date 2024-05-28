@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express'
-import { container } from 'tsyringe'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 
 const authenticator = async (

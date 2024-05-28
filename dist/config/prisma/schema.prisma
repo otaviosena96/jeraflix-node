@@ -1,0 +1,66 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  uuid       String
+  email      String    @unique
+  name       String
+  birth_date DateTime
+  password   String
+  facebookId String?   @unique
+  profiles   Profile[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Profile {
+  id                    Int                    @id @default(autoincrement())
+  uuid                  String
+  name                  String
+  user                  User                   @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user_id               Int
+  color                 String
+  profileMovieFavorites ProfileMovieFavorite[]
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  @@map("profiles")
+}
+
+model ProfileMovieFavorite {
+  id         Int      @id @default(autoincrement())
+  profile    Profile  @relation(fields: [profile_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  profile_id Int
+  tmdbId     Int // O ID do filme na API externa
+  genre      Genres   @relation(fields: [genre_id], references: [id])
+  genre_id   Int
+  title      String
+  overview   String   @db.LongText
+  watched    Boolean
+  favorite   Boolean
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([tmdbId, profile_id], name: "tmdbId_profile_id")
+  @@index([tmdbId, profile_id], name: "idx_tmdbId_profile_id")
+  @@map("profile_movie_favorite")
+}
+
+model Genres {
+  id     Int                    @id @default(autoincrement())
+  name   String
+  movies ProfileMovieFavorite[]
+
+  @@map("genres")
+}
+
+// sudo docker run --name jera-test -e MYSQL_ROOT_PASSWORD=jeratest -e MYSQL_DATABASE=jeraflix_db -p 3306:3306 -d mariadb:latest
