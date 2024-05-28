@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "ts-node-dev src/server.ts ",
-    "build": "esbuild src/**/*.ts src/**/*.ts src/**/*.d.ts src/**/**/**/*.ts src/**/**/*.ts --outdir=dist --platform=node --bundle"
+    "build": "esbuild src/*.ts src/**/*.ts src/**/*.ts src/**/*.d.ts src/**/**/**/*.ts src/**/**/*.ts --outdir=dist --platform=node --bundle"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
